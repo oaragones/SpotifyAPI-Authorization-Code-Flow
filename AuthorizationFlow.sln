@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationFlow", "AuthorizationFlow\AuthorizationFlow.csproj", "{1760C049-C8CC-4344-B256-B6EBD4C2D4A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1760C049-C8CC-4344-B256-B6EBD4C2D4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1760C049-C8CC-4344-B256-B6EBD4C2D4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1760C049-C8CC-4344-B256-B6EBD4C2D4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1760C049-C8CC-4344-B256-B6EBD4C2D4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98C3096D-D810-4198-B4EA-A210A8420640}
+	EndGlobalSection
+EndGlobal
