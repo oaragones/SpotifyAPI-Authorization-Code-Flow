@@ -10,6 +10,7 @@ namespace AuthorizationFlow
     {
         static HttpListener _httpListener = new HttpListener();
         static string html { get; set; }
+        static Thread _ResponseThread { get; set; }
 
         public HttpServer()
         {
@@ -46,8 +47,14 @@ namespace AuthorizationFlow
             _httpListener.Prefixes.Add("http://localhost:5132/");
             _httpListener.Start();
             Console.WriteLine("Server Started");
-            Thread responseThread = new Thread(ResponseThread);
-            responseThread.Start();
+            _ResponseThread = new Thread(ResponseThread);
+            _ResponseThread.Start();
+        }
+
+        public void close()
+        {
+            _ResponseThread.Abort();
+            _httpListener.Stop();
         }
     }
 }

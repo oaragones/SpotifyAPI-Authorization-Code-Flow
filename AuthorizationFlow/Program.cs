@@ -5,55 +5,78 @@ using SpotifyClasses;
 
 namespace AuthorizationFlow
 {
+    class test
+    {
+        public test()
+        {
+            Console.WriteLine("This is constructed");
+        }
+        public void print()
+        {
+            Console.WriteLine("Print function called");
+        }
+        ~test()
+        {
+            Console.WriteLine("this is now called");
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            SpotifyAPI spotify = new SpotifyAPI();
+            SpotifyFunctions spotify = new SpotifyFunctions();
+            UserProfile userProfile = spotify.GetUserProfile();
+            Console.WriteLine("{0}\n{1}", userProfile.birthdate, userProfile.email);
 
-            //---------------------------------
-            //access token to read user profile
-            //---------------------------------
-
-            //List<string> scopes = new List<string> { "user-read-private", "user-read-birthdate", "user-read-email" }; // change scopes
-            //string endpoint = spotify.MakeEndpoint(scopes, AuthTypes.AuthorizationFlow);
-
-            //HttpServer server = new HttpServer();
-            //server.run();
-            //System.Diagnostics.Process.Start(endpoint);
-
-            //spotify.GetAccessToken();
-            //--------------------------------
-            
-            string AccessToken = File.ReadAllText("AccessToken.txt");
-            UserProfile userProfile = spotify.GetUserProfile(AccessToken);
-            Console.WriteLine(userProfile.birthdate);
-            Console.WriteLine(userProfile.product);
-            Console.WriteLine(userProfile.email);
+            foreach (artistInfo artist in spotify.GetTopArtists().items)
+            {
+                Console.WriteLine(artist.name);
+            }
+            test t = new test();
+            t.print();
         }
     }
 
-    public enum AuthTypes
+    public struct AuthTypes
     {
-        AuthorizationFlow,
-        ImplicitGrant,
-        ClientCredentials
+        public const string AuthorizationFlow = "code";
+        public const string ImplicitGrant = "token";
+        public const string ClientCredentials = "";
     };
 
    
     public struct Scopes
     {
-        public const string UserReadPrivate = "user-read-private";
-        public const string UserReadBirthdate = "user-read-birthdate";
-        public const string UserReadEmail = "user-read-email";
+        // Spotify Connect
+        public const string UserReadCurrentlyPlaying = "user-read-currently-playing";
+        public const string UserModifyPlaybackState = "user-modify-playback-state";
+        public const string UserReadPlaybackState = "user-read-playback-state";
 
+        // Playback
+        public const string PlaybackStreaming = "streaming";
+        public const string AppRemoteControl = "app-remote-control";
+
+        // Playlists
         public const string PlaylistReadCollaborative = "playlist-read-collaborative";
         public const string PlaylistModifyPublic = "playlist-modify-public";
         public const string PlaylistReadPrivate = "playlist-read-private";
         public const string PlaylistModifyPrivate = "playlist-modify-private";
 
-        public const string UserReadCurrentlyPlaying = "user-read-currently-playing";
-        public const string UserModifyPlaybackState = "user-modify-playback-state";
-        public const string UserReadPlaybackState = "user-read-playback-state";
+        // Users
+        public const string UserReadPrivate = "user-read-private";
+        public const string UserReadBirthdate = "user-read-birthdate";
+        public const string UserReadEmail = "user-read-email";
+
+        // Follow
+        public const string UserFollowModiy = "user-follow-modify";
+        public const string UserFollowRead = "user-follow-read";
+
+        // Library
+        public const string UserLibraryRead = "user-library-read";
+        public const string UserLibraryModify = "user-library-modify";
+
+        // Listening History
+        public const string UserReadRecentlyPlayed = "user-read-recently-played";
+        public const string UserTopRead = "user-top-read";
     }
 }
