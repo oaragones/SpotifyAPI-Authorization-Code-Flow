@@ -2,40 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using SpotifyClasses;
+using System.Diagnostics;
 
 namespace AuthorizationFlow
 {
-    class test
-    {
-        public test()
-        {
-            Console.WriteLine("This is constructed");
-        }
-        public void print()
-        {
-            Console.WriteLine("Print function called");
-        }
-        ~test()
-        {
-            Console.WriteLine("this is now called");
-        }
-    }
     class Program
     {
         static void Main(string[] args)
         {
-            SpotifyFunctions spotify = new SpotifyFunctions();
-            UserProfile userProfile = spotify.GetUserProfile();
-            Console.WriteLine("{0}\n{1}", userProfile.birthdate, userProfile.email);
+            SpotifyFunctions s = new SpotifyFunctions();
 
-            foreach (artistInfo artist in spotify.GetTopArtists().items)
-            {
-                Console.WriteLine(artist.name);
-            }
-            test t = new test();
-            t.print();
+            s.ToggleShuffle(false);
+            //spotifyCurrentlyPlaying current = s.GetCurrentlyPlaying();
+            //Console.WriteLine(current.item.name);
         }
     }
+
+    public struct Playlists
+    {
+        public const string Americannn = "5ybgdI5zfh6NcMDQp5NHVk";
+        public const string Bangerzzz = "0quqcsWCf5xt8z76kMFMzf";
+    };
 
     public struct AuthTypes
     {
@@ -79,4 +66,10 @@ namespace AuthorizationFlow
         public const string UserReadRecentlyPlayed = "user-read-recently-played";
         public const string UserTopRead = "user-top-read";
     }
+
+    public enum SpotifyType
+    {
+        Album,
+        Playlist
+    };
 }
