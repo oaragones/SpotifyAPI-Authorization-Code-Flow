@@ -9,19 +9,16 @@ namespace AuthorizationFlow
     class HttpServer
     {
         static HttpListener _httpListener { get; set; }
-        static string html { get; set; }
+        private static string html;
         static Thread _ResponseThread { get; set; }
+        private static ManualResetEvent _resetEvent;
+
 
         public HttpServer()
         {
             html = File.ReadAllText(@"C:\Arjun\Visual Studio 2017\Projects\AuthorizationFlow\HTMLpage.txt");
             _httpListener = new HttpListener();
-        }
-
-        public HttpServer(string HTML)
-        {
-            html = HTML;
-            _httpListener = new HttpListener();
+            _resetEvent = new ManualResetEvent(false);
         }
 
         static void ResponseThread()
@@ -33,7 +30,9 @@ namespace AuthorizationFlow
 
                 string AuthCode = request.Url.Query.Substring(6);
                 File.WriteAllText("AuthorizationCode.txt", AuthCode);
-                Console.WriteLine("Code = {0}", AuthCode);
+                Console.WriteLine("Code Recieved, Event Set to Go");
+
+                _resetEvent.Set();
 
                 byte[] byteArray = Encoding.UTF8.GetBytes(html);
                 context.Response.OutputStream.Write(byteArray, 0, byteArray.Length);
@@ -48,15 +47,9 @@ namespace AuthorizationFlow
             }
         }
 
-        public void wait()
-        {
-            Console.WriteLine("Waiting for response thread to finish");
-            _ResponseThread.Join();
-            Console.WriteLine("Response thread finished");
-        }
-
         public void run()
         {
+            Console.WriteLine("About to Listen");
             _httpListener.Prefixes.Add("http://localhost:5132/");
             _httpListener.Start();
             Console.WriteLine("Server Started");
@@ -64,10 +57,18 @@ namespace AuthorizationFlow
             _ResponseThread.Start();
         }
 
+        public void wait()
+        {
+            Console.WriteLine("Waiting for event to signal...");
+            _resetEvent.WaitOne();
+            Console.WriteLine("Event signalled, ready to go");
+        }
+
         public void close()
         {
             _ResponseThread = null;
-            _httpListener = null;
+            Console.WriteLine("Closing HttpListener");
+            _httpListener.Abort();
         }
     }
 }

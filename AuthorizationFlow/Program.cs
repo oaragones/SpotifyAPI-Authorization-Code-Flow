@@ -11,10 +11,11 @@ namespace AuthorizationFlow
         static void Main(string[] args)
         {
             SpotifyFunctions s = new SpotifyFunctions();
+            Console.WriteLine(s.GetUserProfile().birthdate);
 
-            s.ToggleShuffle(false);
-            //spotifyCurrentlyPlaying current = s.GetCurrentlyPlaying();
-            //Console.WriteLine(current.item.name);
+            s.Play();
+            spotifyCurrentlyPlaying current = s.GetCurrentlyPlaying();
+            Console.WriteLine(current.item.name);
         }
     }
 

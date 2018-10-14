@@ -40,9 +40,8 @@ namespace AuthorizationFlow
 
             _server = new HttpServer();
             _server.run();
-            Console.WriteLine(endpoint);
             System.Diagnostics.Process.Start(endpoint);
-            //_server.wait();
+            _server.wait();
         }
 
 
